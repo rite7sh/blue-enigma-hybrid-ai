@@ -1,0 +1,14 @@
+# Environment and credentials
+.env
+config.py
+__pycache__/
+node_modules/
+*.pyc
+.DS_Store
+*.log
+*.sqlite3
+static/
+.vscode/
+.idea/
+.venv/
+venv/

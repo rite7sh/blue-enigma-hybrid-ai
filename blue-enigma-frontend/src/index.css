@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles */
+body {
+  @apply font-sans bg-gradient-to-b from-ocean-deep/80 to-teal-accent/60 text-gray-900;
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+}
+
+/* Smooth animations for all transitions */
+* {
+  @apply transition-all duration-200;
+}
