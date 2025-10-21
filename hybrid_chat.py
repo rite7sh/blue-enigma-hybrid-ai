@@ -6,7 +6,7 @@ from neo4j import GraphDatabase
 from dotenv import load_dotenv
 import config
 
-# Load environment variables
+# loading .envg
 load_dotenv()
 
 EMBED_MODEL = "text-embedding-3-small"
@@ -18,7 +18,7 @@ INDEX_NAME = config.PINECONE_INDEX_NAME
 client = OpenAI(api_key=config.OPENAI_API_KEY)
 pc = Pinecone(api_key=config.PINECONE_API_KEY)
 
-# Ensure Pinecone index exists
+# confirming pinecone index
 if INDEX_NAME not in pc.list_indexes().names():
     print(f"[INFO] Creating managed index: {INDEX_NAME}")
     pc.create_index(

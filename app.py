@@ -12,9 +12,9 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# -----------------------------
-# Custom CSS
-# -----------------------------
+
+# custom CSS (can be better)
+
 st.markdown("""
     <style>
     body {
@@ -71,19 +71,19 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# -----------------------------
-# Header
-# -----------------------------
+
+#header
+
 st.markdown("<div class='title'>Triply AI</div>", unsafe_allow_html=True)
 st.markdown("<div class='subtitle'>Your smart hybrid travel planner 🌍✨</div>", unsafe_allow_html=True)
 
-# -----------------------------
-# Chat Session
-# -----------------------------
+
+# for chatting
+
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
-# Chat display
+# to display chat and message status
 st.markdown("<div class='chat-container'>", unsafe_allow_html=True)
 for msg in st.session_state.messages:
     if msg["role"] == "user":
@@ -92,9 +92,9 @@ for msg in st.session_state.messages:
         st.markdown(f"<div class='bot-bubble'>{msg['content']}</div>", unsafe_allow_html=True)
 st.markdown("</div>", unsafe_allow_html=True)
 
-# -----------------------------
-# Input box
-# -----------------------------
+
+# inputbox
+
 query = st.chat_input("Ask me about destinations, itineraries, or attractions...")
 
 if query:
@@ -110,16 +110,12 @@ if query:
     st.session_state.messages.append({"role": "assistant", "content": answer})
     st.experimental_rerun()
 
-# -----------------------------
-# Sidebar / Graph Viewer
-# -----------------------------
+
 with st.sidebar:
     st.header("🔍 Knowledge Graph")
     st.write("Visualize how destinations and attractions are connected in Neo4j.")
     if st.button("Open Graph Visualization"):
         webbrowser.open_new_tab("neo4j_viz.html")
 
-# -----------------------------
-# Footer
-# -----------------------------
+# naming it triply for now
 st.markdown("<div class='footer'>© 2025 Triply AI | Built with ❤️ using Streamlit, Pinecone & Neo4j</div>", unsafe_allow_html=True)

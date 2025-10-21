@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from openai import OpenAI
 from dotenv import load_dotenv
 
-# Load environment variables
+# loading dotenv
 load_dotenv()
 
 import config
@@ -19,29 +19,26 @@ from hybrid_chat import (
 )
 from visualize_graph import generate_graph_html
 
-# -----------------------------------------------------
-# App Initialization
-# -----------------------------------------------------
+
+# fast api intitialised (i should update it)
 app = FastAPI(
     title="Blue Enigma AI Travel API",
     description="Hybrid AI Travel Assistant using Pinecone + Neo4j + OpenAI",
     version="1.1.2",
 )
 
-# -----------------------------------------------------
+
 # CORS Setup
-# -----------------------------------------------------
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # replace with frontend domain in production
+    allow_origins=["*"],  # for domain in prod.
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# -----------------------------------------------------
-# Models
-# -----------------------------------------------------
+# models
 class ChatRequest(BaseModel):
     query: str
 
@@ -57,14 +54,13 @@ class GraphResponse(BaseModel):
     graph_url: str
 
 
-# -----------------------------------------------------
-# Clients
-# -----------------------------------------------------
+# open ai client
+
 client = OpenAI(api_key=config.OPENAI_API_KEY)
 
-# -----------------------------------------------------
-# Regular Chat Endpoint
-# -----------------------------------------------------
+
+# endpoint for chat
+
 @app.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(req: ChatRequest):
     """Returns the full AI answer in one go (non-streaming)."""
@@ -78,9 +74,9 @@ async def chat_endpoint(req: ChatRequest):
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
 
 
-# -----------------------------------------------------
-# Streaming Chat Endpoint
-# -----------------------------------------------------
+
+# end point for streaming
+
 @app.post("/chat/stream")
 async def chat_stream(req: ChatRequest):
     """Stream OpenAI's response token-by-token using SSE."""
@@ -118,9 +114,8 @@ async def chat_stream(req: ChatRequest):
         raise HTTPException(status_code=500, detail=f"Streaming error: {str(e)}")
 
 
-# -----------------------------------------------------
-# Graph Endpoint
-# -----------------------------------------------------
+
+# endpoint for graph
 @app.get("/graph", response_model=GraphResponse)
 async def graph_endpoint():
     """Generate graph visualization HTML."""
@@ -135,7 +130,7 @@ async def graph_endpoint():
 @app.get("/")
 async def root():
     return {
-        "message": "🌍 Blue Enigma AI Travel API is live!",
+        "message": "Blue Enigma AI Travel API is live",
         "endpoints": {
             "Chat": "/chat (POST)",
             "Chat Stream": "/chat/stream (POST)",
